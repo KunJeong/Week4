@@ -28,19 +28,22 @@ const appReducer = combineReducers({
   reducer,
 });
 
-const middleware = createReactNavigationReduxMiddleware('root', state => state.nav);
-const ReduxNavigator = reduxifyNavigator(AppNavigator, 'root');
-const mapStateToProps = state => ({
-  state: state.nav,
-});
-const ReduxRouter = connect(mapStateToProps)(Router);
-const store = createStore(appReducer, applyMiddleware(middleware));
+// const middleware = createReactNavigationReduxMiddleware('root', state => state.nav);
+// const ReduxNavigator = reduxifyNavigator(AppNavigator, 'root');
+// const mapStateToProps = state => ({
+//   state: state.nav,
+// });
+// const ReduxRouter = connect(mapStateToProps)(Router);
+// const store = createStore(appReducer, applyMiddleware(middleware));
+
+const ConnectedRouter = connect()(Router);
+const store = createStore(appReducer);
 
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <ReduxRouter navigator={ReduxNavigator} />
+        <ConnectedRouter scenes={AppNavigator} />
       </Provider>
     );
   }
