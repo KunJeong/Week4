@@ -20,7 +20,7 @@ class TAG extends Component {
                 onPress ={this.props.action}
                 // disabled={this.state.disabled}
                 color="#A9A9A9"
-                style={{borderColor:"#A9A9A9",borderRadius:3, borderWidth:1, marginRight:5}}>
+                style={{borderColor:"#A9A9A9", padding:1.5, marginRight:5}}>
                 <Text style={{fontSize:14}}>{"#"+this.props.title}</Text>
             </TouchableOpacity>
         );

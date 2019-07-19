@@ -11,7 +11,7 @@ class Category extends Component {
     render() {
         return (
             <TouchableOpacity>
-                <View style={{height:30,width:30, marginRight:20, 
+                <View style={{height:30,width:30, marginRight:20, marginTop:5, 
                 borderWidth:null, borderColor:'#fff', borderRadius:10}}>
                     <Image source={this.props.imageUri}
                         style ={{flex:1, width: null, height:null, resizeMode:'cover'}}/>

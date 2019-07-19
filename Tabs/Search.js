@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import React, { Component } from "react";
 import { 
     View,
@@ -10,7 +14,7 @@ import {
     ScrollView,
     PanResponder,
     Dimensions,
-    Button
+    TouchableHighlight
 } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import Category from '../search/categories/Category';
@@ -18,15 +22,15 @@ import TAG from '../search/categories/TAG';
 // import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 class Search extends Component {
-    title1 = "YesOrYes1"
-    title2 = "YesOrYes2"
-    title3 = "YesOrYes3"
-    title4 = "YesOrYes4"
-    title5 = "YesOrYes5"
+    title1 = "Fashion"
+    title2 = "Street"
+    title3 = "ThugLife"
+    title4 = "가로수길"
+    title5 = "High_Fashion"
 
     constructor(){
         super();
-        this.state={text:''};
+        this.state = {text: "", Bar : false}
     }
     // componentWillMount(){
     //     this.PanResponder = PanResponder.create({
@@ -51,11 +55,14 @@ class Search extends Component {
     //         }
     //     })
     // }\
-
     _onPress(tag){
         this.setState({text: this.state.text + " "+ tag}) 
     }
+    _onPressOptions(){
+        this.setState({Bar: !this.state.Bar})
+    }
     render() {
+        const isOptionsLoaded = this.state.Bar;
         return (
             <SafeAreaView style ={{flex:1}}>
                 <View style = {{padding: 10}}>
@@ -75,38 +82,16 @@ class Search extends Component {
                             style={{flex:1,fontWeight:'700'}}
                             onChangeText= {(text) => this.setState({text})}
                             value ={this.state.text}
-                        />                               
+                        />
+                        <Icon 
+                            name="md-options" 
+                            size={25} style={{alignSelf : 'center', paddingLeft: 15, paddingRight:15}}
+                            onPress={()=>{this._onPressOptions}}
+                        />                            
                     </View> 
                     <ScrollView scrollEventThrottle={16}>
                         <View style={{flex:1, backgroundColor:'white', paddingTop:10}}>
-                            <Text style={{fontSize:15, fontWeight:'700', paddingLeft:15}}>
-                                Customize your Searches!
-                            </Text>                
-                            <View style={{marginTop:10, paddingLeft:5}}>
-                                <ScrollView
-                                    horizontal={true}
-                                    showsHorizontalScrollIndicator={false}>                                                                                   
-                                    <Category imageUri={require('../assets/for_search/T.png')}/> 
-                                    <Category imageUri={require('../assets/for_search/dress.png')}/> 
-                                    <Category imageUri={require('../assets/for_search/Trousers.png')}/> 
-                                    <Category imageUri={require('../assets/for_search/skirt.png')}/>
-                                    <Category imageUri={require('../assets/for_search/outer.png')}/>
-                                    <Category imageUri={require('../assets/for_search/shoes.png')}/> 
-                                    <Category imageUri={require('../assets/for_search/hats.png')}/> 
-                                    <Category imageUri={require('../assets/for_search/accessories.png')}/> 
-                                </ScrollView>                          
-                            </View> 
-                            <View style={{flex: 1,alignItems: 'center',justifyContent: 'center', marginTop:10}}>
-                                <ScrollView
-                                    horizontal={true}
-                                    showsHorizontalScrollIndicator={false}> 
-                                    <TAG title={this.title1} action = {this._onPress.bind(this, this.title1)}/>
-                                    <TAG title={this.title2} action = {this._onPress.bind(this, this.title2)}/>
-                                    <TAG title={this.title3} action = {this._onPress.bind(this, this.title3)}/>
-                                    <TAG title={this.title4} action = {this._onPress.bind(this, this.title4)}/>
-                                    <TAG title={this.title5} action = {this._onPress.bind(this, this.title5)}/>
-                                </ScrollView>  
-                            </View>
+                            {optionBarRender()}
                         </View>
                     </ScrollView>
                 </View>
@@ -118,7 +103,36 @@ class Search extends Component {
              
             // </Animated.View>
         );
+        function optionBarRender(){
+            if(isOptionsLoaded){
+                return(              
+                    <View style={{marginTop:5, paddingLeft:5, marginLeft:15}}>
+                        <View style={{flexWrap: 'wrap', flexDirection:'row', alignItems: 'center'}}>                                                                                   
+                            <Category imageUri={require('../assets/for_search/T.png')}/> 
+                            <Category imageUri={require('../assets/for_search/dress.png')}/> 
+                            <Category imageUri={require('../assets/for_search/Trousers.png')}/> 
+                            <Category imageUri={require('../assets/for_search/skirt.png')}/>
+                            <Category imageUri={require('../assets/for_search/outer.png')}/>
+                            <Category imageUri={require('../assets/for_search/shoes.png')}/> 
+                            <Category imageUri={require('../assets/for_search/hats.png')}/> 
+                            <Category imageUri={require('../assets/for_search/accessories.png')}/> 
+                            <TAG title={this.title1} action = {this._onPress.bind(this, this.title1)}/>
+                            <TAG title={this.title2} action = {this._onPress.bind(this, this.title2)}/>
+                            <TAG title={this.title3} action = {this._onPress.bind(this, this.title3)}/>
+                            <TAG title={this.title4} action = {this._onPress.bind(this, this.title4)}/>
+                            <TAG title={this.title5} action = {this._onPress.bind(this, this.title5)}/>
+                        </View> 
+                    </View>
+                )
+            }else{
+                return null;
+            }
+        }
     }
+    
+    
+            
+    
 }
 export default Search;
 
