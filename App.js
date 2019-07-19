@@ -1,74 +1,88 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+import { View, Text, StyleSheet } from 'react-native';
+import {createBottomTabNavigator} from 'react-navigation';
 
-class Page extends React.Component {
-  render() {
-    return (
-      <View style={styles.fill}>
-        <View style={styles.header}>
-          <Text style={styles.text}>Current scene: "{this.props.currentScene}"</Text>
-          <Text style={styles.text}>This is an arbitrary page.</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.data}
-          onPress={() => {
-            this.props.action('This is your data: [1, 2, 3]');
-          }}
-        >
-          <Text style={styles.text}> Get data </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            Actions.home();
-          }}
-        >
-          <Text style={styles.text}>
-            {' '}
-            {'<'}
-            -- Go to "home"{' '}
-          </Text>
-        </TouchableOpacity>
+import MainFeed from './Tabs/MainFeed';
+import Search from './Tabs/Search';
+import MyCloset from './Tabs/MyCloset';
+import MyPage from './Tabs/MyPage';
+import { AddButton } from './Tabs/AddButton'
+
+import Icon from 'react-native-vector-icons/Ionicons';
+
+class App extends React.Component{
+  render(){
+    return(
+      <View style  = {styles.container}>
+        <Text>LALALALALALA</Text>
       </View>
-    );
+    )
   }
 }
 
-const action = data => ({
-  type: 'data',
-  payload: data,
+export default createBottomTabNavigator({
+  MainFeed:{
+    screen: MainFeed,
+    navigationOptions:{
+      tabBarLabel: "Main Feed",
+      tabBarIcon: ({tintColor})=>(
+        <Icon name="md-paper" color =
+        {tintColor} size={24}/>
+      ),
+    }
+  },
+  Search:{
+    screen:Search,
+    navigationOptions:{
+      tabBarLabel: "Search",
+      tabBarIcon: ({tintColor})=>(
+        <Icon name="md-search" color =
+        {tintColor} size={24}/>
+      ),
+    }
+  },
+  Camera : {
+    screen: () => null, // Empty screen
+    navigationOptions: () => ({
+        tabBarIcon: <AddButton/> // Plus button component
+    })
+  },
+  MyCloset:{
+    screen:MyCloset,
+    navigationOptions:{
+      tabBarLabel: "My Closet",
+      tabBarIcon: ({tintColor})=>(
+        <Icon name="md-shirt" color =
+        {tintColor} size={24}/>
+      ),
+    }
+  },
+  MyPage:{
+    screen:MyPage,
+    navigationOptions:{
+      tabBarLabel: "My Page",
+      tabBarIcon: ({tintColor})=>(
+        <Icon name="md-person" color =
+        {tintColor} size={24}/>
+      ),
+    }
+  },
+},{
+  tabBarOptions: {
+      showLabel: false, // hide labels
+      activeTintColor: '#586589', // active icon color
+      inactiveTintColor: '#fff7ff',  // inactive icon color
+      style: {
+          backgroundColor: '#e6cea8' // TabBar background
+    }
+}});
+
+const styles = StyleSheet.create({
+  container : {
+    flex:1,
+    backgroundColor : '#fff7ff',
+    alignItems : 'center',
+    justifyContent : 'center',
+  },
 });
 
-const styles = {
-  fill: {
-    flex: 1,
-  },
-  header: {
-    flex: 4,
-    padding: 20,
-  },
-  text: {
-    fontSize: 20,
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-  data: {
-    flex: 1,
-    backgroundColor: 'cyan',
-    justifyContent: 'center',
-  },
-  button: {
-    flex: 1,
-    backgroundColor: 'yellow',
-    justifyContent: 'center',
-  },
-};
-
-const mapStateToProps = ({ reducer }) => ({ data } = reducer);
-
-export default connect(
-  mapStateToProps,
-  { action },
-)(Page);
