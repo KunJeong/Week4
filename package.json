@@ -23,8 +23,8 @@
     "react-redux": "^7.1.0",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
-    "rn-bottom-drawer": "^1.4.3",
-    "watchman": "^1.0.0"
+    "watchman": "^1.0.0",
+    "realm": "^2.29.1"-
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
