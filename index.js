@@ -1,9 +1,10 @@
 /**
  * @format
+ * @flow
  */
 
 import {AppRegistry} from 'react-native';
-import app from './App';
+import Masonry from './src/Components/Masonry';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => app);
+AppRegistry.registerComponent(appName, () => Masonry);

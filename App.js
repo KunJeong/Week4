@@ -1,3 +1,7 @@
+/**
+ * @flow
+ */
+
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import {createBottomTabNavigator} from 'react-navigation';
@@ -6,11 +10,12 @@ import MainFeed from './Tabs/MainFeed';
 import Search from './Tabs/Search';
 import MyCloset from './Tabs/MyCloset';
 import MyPage from './Tabs/MyPage';
-import { AddButton } from './Tabs/AddButton'
+import ScrapBook from './Tabs/ScrapBook'
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import {IcoMoon} from "@up-shared/components";
 
-class App extends React.Component{
+class App extends React.Component<{}>{
   render(){
     return(
       <View style  = {styles.container}>
@@ -41,12 +46,7 @@ export default createBottomTabNavigator({
       ),
     }
   },
-  Camera : {
-    screen: () => null, // Empty screen
-    navigationOptions: () => ({
-        tabBarIcon: <AddButton/> // Plus button component
-    })
-  },
+
   MyCloset:{
     screen:MyCloset,
     navigationOptions:{
@@ -57,6 +57,21 @@ export default createBottomTabNavigator({
       ),
     }
   },
+
+  ScrapBook:{
+    screen:ScrapBook,
+    navigationOptions:{
+      tabBarLabel: "Scrap Book",
+      tabBarIcon: ({tintColor})=>(
+        <IcoMoon 
+          name="closet" 
+          color ={tintColor}
+          size = {24}
+        />
+      ),
+    }
+  },
+
   MyPage:{
     screen:MyPage,
     navigationOptions:{
