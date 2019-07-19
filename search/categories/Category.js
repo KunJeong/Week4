@@ -3,17 +3,20 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    TouchableOpacity
 } from "react-native";
 
 class Category extends Component {
     render() {
         return (
-            <View style={{height:30,width:30, marginLeft:5, 
-            borderWidth:null, borderColor:'#fff', borderRadius:10}}>
-                <Image source={this.props.imageUri}
-                    style ={{flex:1, width: null, height:null, resizeMode:'cover'}}/>
-            </View>
+            <TouchableOpacity>
+                <View style={{height:30,width:30, marginRight:20, 
+                borderWidth:null, borderColor:'#fff', borderRadius:10}}>
+                    <Image source={this.props.imageUri}
+                        style ={{flex:1, width: null, height:null, resizeMode:'cover'}}/>
+                </View>
+            </TouchableOpacity>
         );
     }
 }
