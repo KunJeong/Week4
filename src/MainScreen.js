@@ -1,22 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import {createStackNavigator,createBottomTabNavigator} from 'react-navigation';
+import {createBottomTabNavigator} from 'react-navigation';
 
-import MainFeed from "./src/MainFeed";
-import Search from "./src/Search";
-import MyCloset from "./src/MyCloset";
-import MyPage from "./src/MyPage";
-import ScrapBook from "./src/ScrapBook";
+import MainFeed from './MainFeed';
+import Search from './Search';
+import MyCloset from './MyCloset';
+import MyPage from './MyPage';
+import { AddButton } from './AddButton';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export class App extends React.Component{
-  render(){
-    return(<AppTabNavigator />);
-  }
-}
-
-const AppTabNavigator = createBottomTabNavigator({
+export default createBottomTabNavigator({
   MainFeed:{
     screen: MainFeed,
     navigationOptions:{
@@ -37,7 +31,12 @@ const AppTabNavigator = createBottomTabNavigator({
       ),
     }
   },
-
+  Camera : {
+    screen: () => null, // Empty screen
+    navigationOptions: () => ({
+        tabBarIcon: <AddButton/> // Plus button component
+    })
+  },
   MyCloset:{
     screen:MyCloset,
     navigationOptions:{
@@ -48,21 +47,6 @@ const AppTabNavigator = createBottomTabNavigator({
       ),
     }
   },
-
-  ScrapBook:{
-    screen:ScrapBook,
-    navigationOptions:{
-      tabBarLabel: "Scrap Book",
-      tabBarIcon: ({tintColor})=>(
-        <IcoMoon 
-          name="closet" 
-          color ={tintColor}
-          size = {24}
-        />
-      ),
-    }
-  },
-
   MyPage:{
     screen:MyPage,
     navigationOptions:{

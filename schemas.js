@@ -1,22 +1,90 @@
-export const Project = {
-  name: "Project",
-  primaryKey: "projectId",
+class Organisation {}
+Organisation.schema = {
+  name: 'Organisation',
   properties: {
-    projectId: "string",
-    owner: "string",
-    name: "string",
-    timestamp: "date",
-    items: "Item[]"
+    id: 'string',
+    name: 'string',
+    email: 'string',
+    password: 'string',
+    isDeleted: {
+      type: 'bool',
+      default: false
+    }
   }
 };
 
-export const Item = {
-  name: "Item",
-  primaryKey: "itemId",
+class User {}
+User.schema = {
+  name: 'User',
   properties: {
-    itemId: "string",
-    body: "string",
-    isDone: "bool",
-    timestamp: "date"
+    id: 'string',
+    email: 'string',
+    password: 'string',
+    organisation_id: 'string',
+    isDeleted: {
+      type: 'bool',
+      default: false
+    },
+    isOrgAccount: {
+      type: 'bool',
+      default: false
+    }
   }
 };
+
+
+class LocalUser {}
+LocalUser.schema = {
+  name: 'LocalUser',
+  properties: {
+    id: 'string',
+    email: 'string',
+    roles: 'string',
+    isDeleted: {
+      type: 'bool',
+      default: false
+    },
+    isOrgAccount: {
+      type: 'bool',
+      default: false
+    }
+  }
+};
+
+class Project {}
+Project.schema = {
+  name: 'Project',
+  properties: {
+    id: 'string',
+    name: 'string',
+    createdBy: 'string',
+    createdAt: 'date',
+    isDeleted: {
+      type: 'bool',
+      default: false
+    }
+  }
+};
+
+class Template {}
+Template.schema = {
+  name: 'Template',
+  properties: {
+    id: 'string',
+    treeData: 'string',
+    createdBy: 'string',
+    createdAt: 'date',
+    isDeleted: {
+      type: 'bool',
+      default: false
+    }
+  }
+};
+
+export {
+  Organisation,
+  User,
+  Project,
+  Template,
+  LocalUser
+}
