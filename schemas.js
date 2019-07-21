@@ -1,64 +1,139 @@
-class Organisation {}
-Organisation.schema = {
-  name: 'Organisation',
+class Image {}
+Image.schema = {
+  name: 'Image',
+  primaryKey: "imageId",
   properties: {
-    id: 'string',
-    name: 'string',
-    email: 'string',
-    password: 'string',
+    userId: 'string',
+    imageId: 'string',
+    image: 'data'
+  }
+}
+
+class Post {}
+Post.schema = {
+  name: 'Post',
+  primaryKey: "postId",
+  properties: {
+    userId: 'string',
+    postId: 'string',
+    description: 'string?',
+    mainPostHeight: 'double',
+    scrapbook: { // user_id
+      type: 'list',
+      objectType: 'string'
+    },
+    date: {
+      type: 'date',
+      default: new Data()
+    },
+    images: { // image & id
+      type: 'list',
+      objectType: 'Image'
+    },
+    tag: {
+      type: 'list',
+      objectType: 'string'
+    },
     isDeleted: {
       type: 'bool',
       default: false
     }
   }
 };
+
+class Clothes {}
+Clothes.schema = {
+  name: 'Clothes',
+  primaryKey: "clothesId",
+  properties: {
+    clothesId: 'string',
+    description: 'string?',
+    isPublic: {
+      type: 'bool',
+      default: false
+    },
+    date: {
+      type: 'date',
+      default: new Data()
+    },
+    image: 'Image',
+    tag: {
+      type: 'list',
+      objectType: 'string'
+    },
+    isDeleted: {
+      type: 'bool',
+      default: false
+    }
+  }
+};
+
+class Closet {}
+Closet.schema = {
+  name: 'Closet',
+  primaryKey: "closetName",
+  properties: {
+    closetName: 'string',
+    closetId: 'string',
+    description: 'string?',
+    isPublic: {
+      type: 'bool',
+      default: false
+    },
+    clothes: {
+      tyep: 'list',
+      objectType: 'Clothes'
+    },
+    isDeleted: {
+      type: 'bool',
+      default: false
+    }
+  }
+};
+
+class Scrap {}
+Scrap.schema = {
+  name: 'Scrap',
+  primaryKey: "scrapId",
+  properties: {
+    scrapId: 'string',
+    originUserId: 'string',
+    isPublic: {
+      type: 'bool',
+      default: false
+    },
+    image: 'Image',
+    tag: {
+      type: 'list',
+      objectType: 'string',
+    },
+    isDeleted: {
+      type: 'bool',
+      default: false
+    }
+  }
+}
 
 class User {}
 User.schema = {
   name: 'User',
+  primaryKey: "userId",
   properties: {
-    id: 'string',
+    userId: 'string',
     email: 'string',
     password: 'string',
-    organisation_id: 'string',
-    isDeleted: {
-      type: 'bool',
-      default: false
+    scrapbook: { //post_id or clothes_id
+      type: 'list',
+      objectType: 'Scrap'
     },
-    isOrgAccount: {
-      type: 'bool',
-      default: false
-    }
-  }
-};
-
-
-class LocalUser {}
-LocalUser.schema = {
-  name: 'LocalUser',
-  properties: {
-    id: 'string',
-    email: 'string',
-    roles: 'string',
-    isDeleted: {
-      type: 'bool',
-      default: false
+    posts: {
+      type: 'list',
+      objectType: 'Post'
     },
-    isOrgAccount: {
-      type: 'bool',
-      default: false
-    }
-  }
-};
-
-class Project {}
-Project.schema = {
-  name: 'Project',
-  properties: {
-    id: 'string',
-    name: 'string',
-    createdBy: 'string',
-    createdAt: 'date',
+    closet: {
+      type: 'list',
+      objectType: 'Closet'
+    },
     isDeleted: {
       type: 'bool',
       default: false
@@ -66,25 +141,25 @@ Project.schema = {
   }
 };
 
-class Template {}
-Template.schema = {
-  name: 'Template',
+class Tag {}
+Tag.schema = {
+  name: 'Tag',
+  primaryKey: 'tagName',
   properties: {
-    id: 'string',
-    treeData: 'string',
-    createdBy: 'string',
-    createdAt: 'date',
-    isDeleted: {
-      type: 'bool',
-      default: false
+    tagName: 'string',
+    idList: {
+      type: 'list',
+      objectType: 'Image'
     }
   }
-};
+}
 
 export {
-  Organisation,
+  Image,
+  Post,
+  Clothes,
+  Closet,
+  Scrap,
   User,
-  Project,
-  Template,
-  LocalUser
+  Tag
 }
