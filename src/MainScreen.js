@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import {createBottomTabNavigator} from 'react-navigation';
+import {createBottomTabNavigator, createAppContainer} from 'react-navigation';
 
 import MainFeed from './MainFeed';
 import Search from './Search';
@@ -10,7 +10,7 @@ import { AddButton } from './AddButton';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default createBottomTabNavigator({
+const TabNavigator = createBottomTabNavigator({
   MainFeed:{
     screen: MainFeed,
     navigationOptions:{
@@ -76,3 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default createAppContainer(TabNavigator);

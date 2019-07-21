@@ -9,21 +9,59 @@ import {
   Image,
   Alert
 } from 'react-native';
+import Realm from 'realm';
 import { SERVER_URL } from '../constants';
 import { User } from '../schemas';
+import { thisTypeAnnotation } from '@babel/types';
+
+// const email = "";
+// const passworld = "";
 
 export default class SignInScreen extends Component {
-
   constructor(props) {
     super(props);
-    state = {
-      email   : '',
-      password: '',
+    this.state = {
+      email:"",
+      password:""
     }
+    this.signIn = this.signIn.bind(this);
+    this.register = this.register.bind(this);
   }
-
   onClickListener = (viewId) => {
     Alert.alert("Alert", "Button pressed "+viewId);
+  }
+
+  signIn() {
+    const creds = Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password, false);
+    Realm.Sync.User.login(SERVER_URL, creds).then(user => {
+      var realm = new Realm({
+        sync: {
+          user: user,
+          url: SERVER_URL,
+        },
+        schema: [User]
+      })
+      this.props.navigation.navigate('App');
+    }).catch(error => {
+      Alert.alert(
+        'The provided credentials are invalid or the user does not exist.','',
+        [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+        {cancelable: false},
+      );
+      // assertIsAuthError(error, 611, "The provided credentials are invalid or the user does not exist.");
+    });
+  }
+  
+  signOut() {
+    Realm.Sync.User.current.logout();
+    this.props.navigation.navigate('Auth');
+  }
+
+  register() {
+    const creds = Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password);
+    Realm.Sync.User.login(SERVER_URL, creds);
+    this.props.navigation.navigate('App');
+    ///this.props.navigation.navigate('App');
   }
 
   render() {
@@ -45,7 +83,7 @@ export default class SignInScreen extends Component {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={this.signIn}>
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={this.signIn.bind(this)}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
@@ -58,28 +96,6 @@ export default class SignInScreen extends Component {
         </TouchableHighlight>
       </View>
     );
-  }
-
-  signIn() {
-    Realm.Sync.User.login(SERVER_URL, 'email', 'password', (error, user) => {
-      if(!error){
-        var realm = new Realm({
-          sync: {
-            user:user,
-            url: SERVER_URL,
-          },
-          schema: [User]
-        })
-        this.props.navigation.navigate('App');
-      }
-      else {
-        assertIsAuthError(error, 611, "The provided credentials are invalid or the user does not exist.");
-      }
-    });
-  };
-
-  register() {
-    this.props.navigation.navigate('Register');
   }
 }
 
@@ -106,12 +122,6 @@ const styles = StyleSheet.create({
       marginLeft:16,
       borderBottomColor: '#FFFFFF',
       flex:1,
-  },
-  inputIcon:{
-    width:30,
-    height:30,
-    marginLeft:15,
-    justifyContent: 'center'
   },
   buttonContainer: {
     height:45,

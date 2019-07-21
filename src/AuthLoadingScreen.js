@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import Realm from "realm";
+import { View, ActivityIndicator, StatusBar } from "react-native";
+import { User } from '../schemas';
 
 export default class AuthLoadingScreen extends Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
-  }
-
-  componentDidMount() {
-    // Check if we're already authenticated
-    if (Realm.Sync.User.current) {
-      this.onAuthenticated(Realm.Sync.User.current);
-    }
   }
 
   // Fetch the token from storage then navigate to our appropriate place
@@ -23,24 +18,21 @@ export default class AuthLoadingScreen extends Component {
     this.props.navigation.navigate(isAuthenticated ? 'App' : 'Auth');
   };
 
+  userLogoutAll() {
+    var users = Realm.Sync.User.all;
+    for(const key in users) {
+      const user = users[key];
+      user.logout();
+    }
+  }
+
   // Render any loading content that you like here
   render() {
     return (
       <View>
         <ActivityIndicator />
-        <StatusBar barStyle="default" />
+        <StatusBar barStyle="default" hidden />
       </View>
     );
-  }
-
-  onAuthenticated(user) {
-    // Create a configuration to open the default Realm
-    const config = user.createConfiguration({
-      schema: [Project, Item]
-    });
-    // Open the Realm
-    const realm = new Realm(config);
-    // Navigate to the main scene
-    Actions.authenticated({ user, realm });
   }
 }

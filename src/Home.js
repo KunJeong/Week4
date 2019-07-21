@@ -8,11 +8,14 @@ import AuthLoadingScreen from './AuthLoadingScreen';
 const AppStack = createStackNavigator({ Main: MainScreen });      // 앱 메인 화면
 const AuthStack = createStackNavigator({ SignIn: SignInScreen }); // 인증 화면
 
-const AppNavigator = createStackNavigator(
+const AppNavigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
     Auth: AuthStack,
+  },
+  {
+    headerMode: 'none',
   },
   {
     initialRouteName: 'AuthLoading',
