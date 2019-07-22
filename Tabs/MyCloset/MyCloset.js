@@ -86,10 +86,10 @@ class MyCloset extends Component {
                       backgroundColor={'rgba(0, 0, 0, 0.3)'}
                       barStyle={'light-content'}
                     />
-                    <Swiper style={styles_swiper.wrapper} showsButtons={true}>
+                    {/* <Swiper style={styles_swiper.wrapper} showsButtons={true}>
                         <View style={styles.container}>
                             <Text style={styles_swiper.text}>Hello Swiper</Text>
-                        </View>
+                        </View> */}
                         <View style={styles.container}>
                             <ScrollView
                                 style={styles.scrollview}
@@ -133,10 +133,10 @@ class MyCloset extends Component {
                                 {this.state.b_Accessories ?  Accessories  : null }
                             </ScrollView>
                         </View>
-                        <View style={styles.container}>
+                        {/* <View style={styles.container}>
                             <Text style={styles_swiper.text}>And simple</Text>
                         </View>
-                    </Swiper>
+                    </Swiper> */}
                     
                 </View>
             </SafeAreaView>

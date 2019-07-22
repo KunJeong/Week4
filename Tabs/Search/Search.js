@@ -70,7 +70,7 @@ class Search extends Component<{}, State> {
                         <Category title="Outer" imageUri={require('../../assets/for_search/outer.png')} uponPress={this.uponPress}/>
                         <Category title="Shoes" imageUri={require('../../assets/for_search/shoes.png')} uponPress={this.uponPress}/> 
                         <Category title="Hats" imageUri={require('../../assets/for_search/hats.png')} uponPress={this.uponPress}/> 
-                        <Category title="Accessories" imageUri={require('../../assets/for_search/accessories.png')}/> 
+                        <Category title="Accessories" imageUri={require('../../assets/for_search/accessories.png')} uponPress={this.uponPress}/> 
                         <TAG title={title1} uponPress={this.uponPress}/>
                         <TAG title={title2} uponPress={this.uponPress}/>
                         <TAG title={title3} uponPress={this.uponPress}/>
