@@ -7,13 +7,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import {createBottomTabNavigator} from 'react-navigation';
 
 import MainFeed from './Tabs/MainFeed';
-import Search from './Tabs/Search';
-import MyCloset from './Tabs/MyCloset';
+import Search from './Tabs/Search/Search';
+import MyCloset from './Tabs/MyCloset/MyCloset';
 import MyPage from './Tabs/MyPage';
 import ScrapBook from './Tabs/ScrapBook'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import {IcoMoon} from "@up-shared/components";
+import styles from './Tabs/MyCloset/styles/index.style'
 
 class App extends React.Component<{}>{
   render(){
@@ -52,8 +53,11 @@ export default createBottomTabNavigator({
     navigationOptions:{
       tabBarLabel: "My Closet",
       tabBarIcon: ({tintColor})=>(
-        <Icon name="md-shirt" color =
-        {tintColor} size={24}/>
+        <IcoMoon 
+          name="closet" 
+          color ={tintColor}
+          size = {24}
+        />
       ),
     }
   },
@@ -64,10 +68,9 @@ export default createBottomTabNavigator({
       tabBarLabel: "Scrap Book",
       tabBarIcon: ({tintColor})=>(
         <IcoMoon 
-          name="closet" 
-          color ={tintColor}
-          size = {24}
-        />
+          name="scrapbook" 
+          color = {tintColor} 
+          size={24}/>
       ),
     }
   },
@@ -91,13 +94,4 @@ export default createBottomTabNavigator({
           backgroundColor: '#e6cea8' // TabBar background
     }
 }});
-
-const styles = StyleSheet.create({
-  container : {
-    flex:1,
-    backgroundColor : '#fff7ff',
-    alignItems : 'center',
-    justifyContent : 'center',
-  },
-});
 

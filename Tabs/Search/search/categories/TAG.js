@@ -6,21 +6,16 @@ import {
     TouchableOpacity,
 } from "react-native";
 
-class TAG extends Component {
-    // constructor(){
-    //     super();
-    //     this.state = {disabled: false}
-    // }
-    // toggle(){
-    //     this.setState({disabled: })
-    // }
+class TAG extends Component<Props> {
+    constructor(props){
+        super(props);
+    }
     render() {
         return (
             <TouchableOpacity
-                onPress ={this.props.action}
-                // disabled={this.state.disabled}
+                onPress = {()=> this.props.uponPress("#"+this.props.title)}
                 color="#A9A9A9"
-                style={{borderColor:"#A9A9A9", padding:1.5, marginRight:5}}>
+                style={{padding:1.5, marginRight:5}}>
                 <Text style={{fontSize:14}}>{"#"+this.props.title}</Text>
             </TouchableOpacity>
         );
