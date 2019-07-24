@@ -12,7 +12,7 @@ class Category_Closet extends Component {
         return (
             <TouchableOpacity
                 onPress = {this.props.uponPress}>
-                <View style={{height:30,width:30, marginHorizontal:7, 
+                <View style={{height:30,width:30, marginHorizontal:7, marginBottom:4,
                 borderWidth:null, borderColor:'#fff'}}>
                     <Image source={this.props.imageUri}
                         style ={{flex:1, width: null, height:null, resizeMode:'cover', borderRadius:8}}/>

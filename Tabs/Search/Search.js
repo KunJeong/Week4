@@ -42,7 +42,12 @@ class Search extends Component<{}, State> {
             searchResults : []
         }
     }
-    
+    componentWillMount(){
+        this.startHeaderHeight = 80
+        if(Platform.OS == 'android'){
+            this.startHeaderHeight = 100 + StatusBar.currentHeight
+        }
+    }
     uponPress=(tag)=>{
         this.setState({text: this.state.text + " "+ tag}); 
     }
@@ -87,11 +92,6 @@ class Search extends Component<{}, State> {
         return (
             <SafeAreaView style={styles.safeArea}>
                 <View style = {{flex: 1, alignItems:'center',justifyContent : 'center', padding:10}}>
-                    <StatusBar
-                      translucent={true}
-                      backgroundColor={'rgba(0, 0, 0, 0.3)'}
-                      barStyle={'light-content'}
-                    />
                     <View style={{
                         flexDirection:'row',
                         shadowOffset:{width:0,height:0},
@@ -99,7 +99,6 @@ class Search extends Component<{}, State> {
                         shadowOpacity:0.2,
                         elevation:1,
                         borderRadius: 10,
-                        marginTop:StatusBar.currentHeight
                         }}>
                         
                         <Icon name="md-search" size={25} style={{alignSelf : 'center', paddingLeft: 15, paddingRight:15}}/>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, View, ScrollView, Text, StatusBar, SafeAreaView, Dimensions } from 'react-native';
+import { Platform, View, ScrollView, Text, StatusBar, SafeAreaView, Dimensions, TouchableOpacity,Image, Alert } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import { sliderWidth, itemWidth } from './styles/SliderEntry.style';
@@ -10,35 +10,58 @@ import { scrollInterpolators, animatedStyles } from './utils/animations';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+let containerStyle = {};
+let pageStyle = {};
 
 class CarouselOptions extends Component {
     constructor(props){
         super(props);
         this.state={
-            isOpen: false
+            isOpen: false,
+            
+        }
+        if (Platform.OS == 'android') {
+            let offset = ((viewportHeight - StatusBar.currentHeight -54) - viewportWidth) / 2;
+            containerStyle.transform = [{ rotate: "90deg" }];
+            containerStyle.width = viewportHeight - StatusBar.currentHeight;
+            containerStyle.height = viewportWidth;
+            containerStyle.top = offset;
+            containerStyle.left = offset * -1;
+
+            pageStyle.transform = [{ rotate: "-90deg" }];
+            pageStyle.width = viewportWidth;
+            pageStyle.height = viewportHeight - StatusBar.currentHeight;
+            pageStyle.top = offset * -1;  //left
+            pageStyle.right = offset * -1;   //top
+        } else {
+            containerStyle.flex = 1;
+            pageStyle.flex = 1;
         }
     }
     _onPressADD(){
-        
         this.setState({isOpen: !this.state.isOpen});
     }
+    setAndPassSelectedItemUri(uri){
+        this.props._addItemToSet(uri, this.props.name)
+    }
     _renderItem ({item, index}) {
-        return <SliderEntry data={item}/>;
+        return (<SliderEntry data={item} onClick={this.setAndPassSelectedItemUri.bind(this)}/>);
     }
     renderCarousel(){
         if(this.state.isOpen){
             return( 
             <Carousel
                 data={this.props.Data}
-                renderItem={this._renderItem}
+                renderItem={this._renderItem.bind(this)}
                 sliderWidth={sliderWidth}
                 itemWidth={itemWidth}
                 containerCustomStyle={styles.slider}
                 contentContainerCustomStyle={styles.sliderContentContainer}
                 layout={this.props.Type}
-                loop={true}
+                loop={false}
                 enableMomentum={true}
                 swipeThreshold={90}
+                firstItem={this.props.Data.length-1}
             />);
         }else{
             return null;
@@ -67,23 +90,17 @@ class CarouselOptions extends Component {
                         elevation:1,
                         alignItems:'center'
                         }}>
-                    <Text style={[styles.title, styles.titleDark]}>{`${this.props.name}`}</Text>
-                    <View style={{flex:1}}></View>
-                    {this.state.isOpen ? 
-                        <Icon name="md-close" 
-                        size={25} 
-                        style={{paddingLeft: 15, paddingRight:15}}
-                        onPress={this._onPressADD.bind(this)}
-                        />    
-                     :
+                    <View style={{flexDirection:'row'}} >
+                        <TouchableOpacity style={{flex:9}} onPress={this._onPressADD.bind(this)}>
+                            <Text style={[styles.title, styles.titleDark]}>{`${this.props.name}`}</Text>
+                        </TouchableOpacity>
                         <Icon name="md-add" 
-                            size={25} 
-                            style={{paddingLeft: 15, paddingRight:15}}
-                            onPress={this._onPressADD.bind(this)}
-                        />
-                    }
-                    
-                </View>
+                                size={25} 
+                                style={{flex:1, paddingLeft: 15}}
+                                //onPress={this.addImageto....}
+                            />
+                    </View>
+                    </View>
                 <View>
                     {this.renderCarousel()}
                 </View>

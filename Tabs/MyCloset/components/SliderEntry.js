@@ -4,29 +4,19 @@ import PropTypes from 'prop-types';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from '../styles/SliderEntry.style';
 
-export default class SliderEntry extends Component {
+export default class SliderEntry extends Component<Props> {
+    constructor(props){
+        super(props);
+    }
 
     static propTypes = {
         data: PropTypes.object.isRequired,
-        even: PropTypes.bool,
-        parallax: PropTypes.bool,
-        parallaxProps: PropTypes.object
     };
 
     get image () {
-        const { data: { illustration }, parallax, parallaxProps, even } = this.props;
+        const { data: { illustration }} = this.props;
 
-        return parallax ? (
-            <ParallaxImage
-              source={{ uri: illustration }}
-              containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
-              style={styles.image}
-              parallaxFactor={0.35}
-              showSpinner={true}
-              spinnerColor={even ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.25)'}
-              {...parallaxProps}
-            />
-        ) : (
+        return( 
             <Image
               source={{ uri: illustration }}
               style={styles.image}
@@ -35,33 +25,23 @@ export default class SliderEntry extends Component {
     }
 
     render () {
-        const { data: { title, subtitle }, even } = this.props;
-
-        const uppercaseTitle = title ? (
-            <Text
-              style={[styles.title, even ? styles.titleEven : {}]}
-              numberOfLines={2}
-            >
-                { title.toUpperCase() }
-            </Text>
-        ) : false;
-
+        const { data: { subtitle } } = this.props;
+        const { data: { illustration }} = this.props;
         return (
             <TouchableOpacity
               activeOpacity={1}
               style={styles.slideInnerContainer}
-              onPress={() => { alert(`You've clicked '${title}'`); }}
+              onPress = {()=>this.props.onClick(illustration)}
               >
                 <View style={styles.shadow} />
-                <View style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}>
+                <View style={styles.imageContainer}>
                     { this.image }
-                    <View style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]} />
+                    <View style={styles.radiusMask} />
                 </View>
-                <View style={[styles.textContainer, even ? styles.textContainerEven : {}]}>
-                    { uppercaseTitle }
+                <View style={styles.textContainer}>
                     <Text
-                      style={[styles.subtitle, even ? styles.subtitleEven : {}]}
-                      numberOfLines={2}
+                      style={styles.subtitle}
+                      numberOfLines={1}
                     >
                         { subtitle }
                     </Text>
