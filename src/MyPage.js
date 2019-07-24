@@ -15,6 +15,7 @@ class MyPage extends Component {
 
     signout() {
         Realm.Sync.User.current.logout();
+        this.props.navigation.navigate('Auth');
     }
 
     render() {
@@ -23,7 +24,7 @@ class MyPage extends Component {
                 <Text style={styles.buttonContainer}>
                     Hi!
                 </Text>
-                <TouchableHighlight style={[styles.buttonContainer, styles.logoutButton]} onPress={this.signout}>
+                <TouchableHighlight style={[styles.buttonContainer, styles.logoutButton]} onPress={this.signout.bind(this)}>
                 <Text style={styles.logoutText}>Sign Out</Text>
                 </TouchableHighlight>
             </View>

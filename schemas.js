@@ -1,13 +1,14 @@
-class Image {}
-Image.schema = {
-  name: 'Image',
-  primaryKey: "imageId",
+class One_Image {}
+One_Image.schema = {
+  name: 'One_Image',
   properties: {
     userId: 'string',
-    imageId: 'string',
-    image: 'data'
+    imageUri: 'string',
+    imageWidth: 'double',
+    imageRatio: 'double',
+    imageMime: 'string'
   }
-}
+};
 
 class Post {}
 Post.schema = {
@@ -17,18 +18,19 @@ Post.schema = {
     userId: 'string',
     postId: 'string',
     description: 'string?',
-    mainPostHeight: 'double',
+    mainPostHeight: 'double', // height / width
     scrapbook: { // user_id
       type: 'list',
-      objectType: 'string'
+      objectType: 'string',
+      default: []
     },
     date: {
       type: 'date',
-      default: new Data()
+      default: new Date()
     },
     images: { // image & id
       type: 'list',
-      objectType: 'Image'
+      objectType: 'One_Image'
     },
     tag: {
       type: 'list',
@@ -54,7 +56,7 @@ Clothes.schema = {
     },
     date: {
       type: 'date',
-      default: new Data()
+      default: new Date()
     },
     image: 'Image',
     tag: {
@@ -81,7 +83,7 @@ Closet.schema = {
       default: false
     },
     clothes: {
-      tyep: 'list',
+      type: 'list',
       objectType: 'Clothes'
     },
     isDeleted: {
@@ -112,7 +114,7 @@ Scrap.schema = {
       default: false
     }
   }
-}
+};
 
 class User {}
 User.schema = {
@@ -122,6 +124,9 @@ User.schema = {
     userId: 'string',
     email: 'string',
     password: 'string',
+    mainImage: {
+      type: 'data?',
+    },
     scrapbook: { //post_id or clothes_id
       type: 'list',
       objectType: 'Scrap'
@@ -152,10 +157,10 @@ Tag.schema = {
       objectType: 'Image'
     }
   }
-}
+};
 
 export {
-  Image,
+  One_Image,
   Post,
   Clothes,
   Closet,

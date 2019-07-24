@@ -10,7 +10,7 @@ import {
   Alert
 } from 'react-native';
 import Realm from 'realm';
-import { SERVER_URL } from '../constants';
+import {SERVER_URL} from '../constants';
 import { User } from '../schemas';
 import { thisTypeAnnotation } from '@babel/types';
 
@@ -31,25 +31,41 @@ export default class SignInScreen extends Component {
     Alert.alert("Alert", "Button pressed "+viewId);
   }
 
-  signIn() {
-    const creds = Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password, false);
-    Realm.Sync.User.login(SERVER_URL, creds).then(user => {
-      var realm = new Realm({
-        sync: {
-          user: user,
-          url: SERVER_URL,
-        },
-        schema: [User]
-      })
-      this.props.navigation.navigate('App');
-    }).catch(error => {
+  async signIn() {
+    try {
+      this.setState({ error: undefined });
+      let creds = await Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password, false);
+      var currentUser = await Realm.Sync.User.login(SERVER_URL, creds).then(user => {
+        const config = user.createConfiguration({
+          schema: [ One_Image, Post, Clothes, Closet, Scrap, User, Tag ]
+        });
+        var realm = new Realm({
+          sync: {
+            user: user,
+            url: SERVER_URL,
+          },
+          config
+        })
+      });
+    }
+    catch(error){
+      const isAuthenticated = !!Realm.Sync.User.current;
+    }
+    
+    const isAuthenticated = !!Realm.Sync.User.current;
+      
+    // this.props.navigation.navigate(isAuthenticated ? 'Auth': 'App');
+    if(isAuthenticated){
+      this.props.navigation.navigate('App', {realm: realm, user : currentUser});
+    }
+    else{
       Alert.alert(
-        'The provided credentials are invalid or the user does not exist.','',
+        '',
+        'The provided credentials are invalid or the user does not exist!',
         [{text: 'OK', onPress: () => console.log('OK Pressed')}],
         {cancelable: false},
       );
-      // assertIsAuthError(error, 611, "The provided credentials are invalid or the user does not exist.");
-    });
+    }
   }
   
   signOut() {
