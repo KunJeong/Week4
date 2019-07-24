@@ -14,14 +14,11 @@ import { SERVER_URL } from '../constants';
 import { One_Image, Post, Clothes, Closet, Scrap, User, Tag } from '../schemas';
 import { thisTypeAnnotation } from '@babel/types';
 
-// const email = "";
-// const passworld = "";
-
 export default class SignInScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      username: "",
       password: ""
     }
     this.signIn = this.signIn.bind(this);
@@ -33,10 +30,10 @@ export default class SignInScreen extends Component {
 
   async signIn() {
 
-    if ((!this.state.email) || (!this.state.password)){
+    if ((!this.state.username) || (!this.state.password)){
       Alert.alert(
         '',
-        'Please check email or password!',
+        'Please check username or password!',
         [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
         { cancelable: false },
       );
@@ -44,7 +41,7 @@ export default class SignInScreen extends Component {
     }
     try {
       this.setState({ error: undefined });
-      let creds = await Realm.Sync.Credentials.usernamePassword(this.state.email, this.state.password, false);
+      let creds = await Realm.Sync.Credentials.usernamePassword(this.state.username, this.state.password, false);
       await Realm.Sync.User.login(SERVER_URL, creds);
     }
     catch (error) {
@@ -79,10 +76,10 @@ export default class SignInScreen extends Component {
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputs}
-            placeholder="Email"
+            placeholder="Username"
             keyboardType="email-address"
             underlineColorAndroid='transparent'
-            onChangeText={(email) => this.setState({ email })} />
+            onChangeText={(username) => this.setState({ username })} />
         </View>
 
         <View style={styles.inputContainer}>
