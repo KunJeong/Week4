@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Realm from 'realm';
 import { SERVER_URL } from '../constants';
-import { One_Image, Comment, Post, Clothes, Closet, User, Tag } from '../schemas';
+import { One_Image, Comment, Post, LookBook, Clothes, Closet, User, Tag } from '../schemas';
 import { thisTypeAnnotation } from '@babel/types';
 
 // const email = "";
@@ -56,7 +56,7 @@ export default class RegisterScreen extends Component {
                 fullSynchronization: true,
 
             });
-            config.schema = [One_Image, Comment, Post, Clothes, Closet, User, Tag];
+            config.schema = [One_Image, Comment, Post, LookBook, Clothes, Closet, User, Tag];
             Realm.open(config).then((realm) => {
                 realm.write(() => {
                     realm.create('User', {
@@ -70,6 +70,7 @@ export default class RegisterScreen extends Component {
                         closet: [],
                         followerList: [],
                         followingList: [],
+                        lookBookList: []
                     });
                 })
             });

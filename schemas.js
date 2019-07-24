@@ -67,6 +67,57 @@ Post.schema = {
   }
 };
 
+class LookBook {}
+LookBook.schema = {
+  name: 'LookBook',
+  primaryKey: 'lookbookId',
+  properties: {
+    userId: 'string',
+    lookbookId: 'string',
+    title: {
+      type: 'string?',
+      default: 'undefined',
+    },
+    tags: {
+      type: 'list',
+      objectType: 'string',
+      default: []
+    },
+    Outer: {
+      type: 'string?',
+      default: null
+    },
+    T_shirt: {
+      type: 'string?',
+      default: null
+    },
+    Dress: {
+      type: 'string?',
+      default: null
+    },
+    Trousers: {
+      type: 'string?',
+      default: null
+    },
+    Skirt: {
+      type: 'string?',
+      default: null
+    },
+    Shoes: {
+      type: 'string?',
+      default: null
+    },
+    Hats: {
+      type: 'string?',
+      default: null
+    },
+    Accessories: {
+      type: 'string?',
+      default: null
+    },
+  }
+};
+
 class Clothes {}
 Clothes.schema = {
   name: 'Clothes',
@@ -147,6 +198,11 @@ User.schema = {
       objectType: 'string',
       default: []
     },
+    lookBookList: {
+      type: "list",
+      objectType: 'string',
+      default: []
+    },
     isDeleted: {
       type: 'bool',
       default: false
@@ -177,6 +233,7 @@ export {
   One_Image,
   Comment,
   Post,
+  LookBook,
   Clothes,
   Closet,
   User,
