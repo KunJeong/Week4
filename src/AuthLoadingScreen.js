@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
 import Realm from "realm";
-import { View, ActivityIndicator, StatusBar } from "react-native";
-import { User } from '../schemas';
+import { SERVER_URL } from '../constants';
+import { View, ActivityIndicator, StatusBar, Alert } from "react-native";
+import { One_Image, Comment, Post, Clothes, Closet, User, Tag } from '../schemas';
 
 export default class AuthLoadingScreen extends Component {
   constructor(props) {
     super(props);
-    this._bootstrapAsync();
+    this.checkLogin();
   }
-
-  // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
-    const isAuthenticated = !!Realm.Sync.User.current;
-
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
+  checkLogin = async () => {
+    const isAuthenticated = await !!Realm.Sync.User.current;
     this.props.navigation.navigate(isAuthenticated ? 'App' : 'Auth');
   };
 

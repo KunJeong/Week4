@@ -4,15 +4,18 @@ import { createStackNavigator, createSwitchNavigator, createAppContainer } from 
 import MainScreen from './MainScreen';
 import SignInScreen from './SignInScreen';
 import AuthLoadingScreen from './AuthLoadingScreen';
+import RegisterScreen from './RegisterScreen';
 
-const AppStack = createStackNavigator({ Main: MainScreen });      // 앱 메인 화면
-const AuthStack = createStackNavigator({ SignIn: SignInScreen }); // 인증 화면
+const AppStack = createStackNavigator({ Main: MainScreen });
+const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+const RegisterStack = createStackNavigator({ Register: RegisterScreen });
 
 const AppNavigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
     Auth: AuthStack,
+    Regi: RegisterStack,
   },
   {
     headerMode: 'none',

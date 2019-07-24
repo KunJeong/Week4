@@ -3,10 +3,27 @@ One_Image.schema = {
   name: 'One_Image',
   properties: {
     userId: 'string',
+    imageId: 'string',
     imageUri: 'string',
     imageWidth: 'double',
     imageRatio: 'double',
-    imageMime: 'string'
+    imageMime: 'string?'
+  }
+};
+
+class Comment {}
+Comment.schema = {
+  name: 'Comment',
+  primaryKey: 'commentId',
+  properties: {
+    commentId: 'string',
+    userId: 'string',
+    comment: 'string',
+    like: { // user_id
+      type: 'list',
+      objectType: 'string',
+      default: []
+    }
   }
 };
 
@@ -24,21 +41,28 @@ Post.schema = {
       objectType: 'string',
       default: []
     },
+    like: { // user_id
+      type: 'list',
+      objectType: 'string',
+      default: []
+    },
     date: {
       type: 'date',
       default: new Date()
     },
     images: { // image & id
       type: 'list',
-      objectType: 'One_Image'
+      objectType: 'string'
     },
     tag: {
       type: 'list',
-      objectType: 'string'
+      objectType: 'string',
+      default: []
     },
-    isDeleted: {
-      type: 'bool',
-      default: false
+    comments: {
+      type: 'list',
+      objectType: 'Comment',
+      default: []
     }
   }
 };
@@ -58,19 +82,16 @@ Clothes.schema = {
       type: 'date',
       default: new Date()
     },
-    image: 'Image',
+    image: 'string',
     tag: {
       type: 'list',
-      objectType: 'string'
-    },
-    isDeleted: {
-      type: 'bool',
-      default: false
+      objectType: 'string',
+      default: []
     }
   }
 };
 
-class Closet {}
+class Closet {} // ex) T-shirt, dress
 Closet.schema = {
   name: 'Closet',
   primaryKey: "closetName",
@@ -85,33 +106,6 @@ Closet.schema = {
     clothes: {
       type: 'list',
       objectType: 'Clothes'
-    },
-    isDeleted: {
-      type: 'bool',
-      default: false
-    }
-  }
-};
-
-class Scrap {}
-Scrap.schema = {
-  name: 'Scrap',
-  primaryKey: "scrapId",
-  properties: {
-    scrapId: 'string',
-    originUserId: 'string',
-    isPublic: {
-      type: 'bool',
-      default: false
-    },
-    image: 'Image',
-    tag: {
-      type: 'list',
-      objectType: 'string',
-    },
-    isDeleted: {
-      type: 'bool',
-      default: false
     }
   }
 };
@@ -122,22 +116,36 @@ User.schema = {
   primaryKey: "userId",
   properties: {
     userId: 'string',
-    email: 'string',
-    password: 'string',
+    username: 'string?',
+    email: 'string?',
+    password: 'string?',
     mainImage: {
-      type: 'data?',
+      type: 'string?',
     },
-    scrapbook: { //post_id or clothes_id
+    scrapbook: { //post_id
       type: 'list',
-      objectType: 'Scrap'
+      objectType: 'string',
+      default: []
     },
     posts: {
       type: 'list',
-      objectType: 'Post'
+      objectType: 'Post',
+      default: []
     },
     closet: {
       type: 'list',
-      objectType: 'Closet'
+      objectType: 'string',
+      default: []
+    },
+    followerList: {
+      type: 'list',
+      objectType: 'string',
+      default: []
+    },
+    followingList: {
+      type: "list",
+      objectType: 'string',
+      default: []
     },
     isDeleted: {
       type: 'bool',
@@ -152,19 +160,25 @@ Tag.schema = {
   primaryKey: 'tagName',
   properties: {
     tagName: 'string',
-    idList: {
+    postIdList: {
       type: 'list',
-      objectType: 'Image'
+      objectType: 'string',
+      default: []
+    },
+    clothesIdList: {
+      type: 'list',
+      objectType: 'string',
+      default: []
     }
   }
 };
 
 export {
   One_Image,
+  Comment,
   Post,
   Clothes,
   Closet,
-  Scrap,
   User,
   Tag
 }

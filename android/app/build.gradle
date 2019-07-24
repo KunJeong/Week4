@@ -189,10 +189,16 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-image-crop-picker')
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation project(':realm')
+    implementation "com.google.android.gms:play-services-base:16.1.0"
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation "com.google.firebase:firebase-storage:17.0.0"
+    implementation 'com.google.firebase:firebase-database:18.0.0'
+    implementation project(':react-native-firebase')
     
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
@@ -209,5 +215,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+apply plugin: 'com.google.gms.google-services'
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+

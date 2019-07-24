@@ -6,14 +6,13 @@ import {
     TouchableHighlight
 } from "react-native";
 
-import {SignInScreen} from './SignInScreen';
-
 class MyPage extends Component {
     constructor(props) {
       super(props);
+      this.logout = this.logout.bind(this);
     }
 
-    signout() {
+    logout() {
         Realm.Sync.User.current.logout();
         this.props.navigation.navigate('Auth');
     }
@@ -24,13 +23,14 @@ class MyPage extends Component {
                 <Text style={styles.buttonContainer}>
                     Hi!
                 </Text>
-                <TouchableHighlight style={[styles.buttonContainer, styles.logoutButton]} onPress={this.signout.bind(this)}>
-                <Text style={styles.logoutText}>Sign Out</Text>
+                <TouchableHighlight style={[styles.buttonContainer, styles.logoutButton]} onPress={this.logout.bind(this)}>
+                <Text style={styles.logoutText}>Log Out</Text>
                 </TouchableHighlight>
             </View>
         );
     }
 }
+
 export default MyPage;
 
 const styles = StyleSheet.create({
