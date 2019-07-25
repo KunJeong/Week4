@@ -3,6 +3,8 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from '../styles/SliderEntry.style';
+import FastImage from 'react-native-fast-image'
+
 
 export default class SliderEntry extends Component<Props> {
     constructor(props){
@@ -20,7 +22,7 @@ export default class SliderEntry extends Component<Props> {
         const { data: { illustration }} = this.props;
 
         return( 
-            <Image
+            <FastImage
               source={{ uri: illustration }}
               style={styles.image}
             />
@@ -38,7 +40,7 @@ export default class SliderEntry extends Component<Props> {
             <TouchableOpacity
               activeOpacity={1}
               style={styles.slideInnerContainer}
-        onPress = {this.touched/*[()=>this.props.onClick(illustration)]*/}
+              onPress = {this.touched/*[()=>this.props.onClick(illustration)]*/}
               >
                 <View style={styles.shadow} />
                 {this.state.touched ? (<View style={styles.imageContainer_Touched}>

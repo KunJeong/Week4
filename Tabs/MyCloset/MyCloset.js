@@ -19,6 +19,7 @@ import ViewShot from 'react-native-view-shot';
 import { FlatList } from 'react-native-gesture-handler';
 import OutfitImage from './OutfitImage';
 import {v4 as uuid} from 'uuid'
+import FastImage from 'react-native-fast-image'
 
 
 const IS_ANDROID = Platform.OS === 'android';
@@ -32,6 +33,10 @@ class MyCloset extends Component {
     constructor(props) {
         super(props);
         this._addItemToSet = this._addItemToSet.bind(this)
+        this.acceptOverwrite = this.acceptOverwrite.bind(this)
+        this.onCapture = this.onCapture.bind(this)
+        this._edit = this._edit.bind(this)
+        this._renderItem = this._renderItem.bind(this)
         this.state = {
             slider1ActiveSlide: SLIDER_1_FIRST_ITEM,
             b_T_shirt: false, b_Dress: false, b_Trousers: false,
@@ -90,7 +95,6 @@ class MyCloset extends Component {
             Yes_Overwrite : false
         };
     }
-
 
 
     uponPressT = () => {
@@ -165,7 +169,7 @@ class MyCloset extends Component {
         }
         return modHash
     }
-    onCapture = () => {
+    onCapture(){
         this.refs.viewShot.capture().then(uri => {
             title = this.state.TextInputTitle
             tags = this.state.TextInputTag
@@ -230,11 +234,11 @@ class MyCloset extends Component {
     // _share(){
     //     null
     // }
-    askAreyouSure=()=>{
+    askAreyouSure(){
         this.setState({Alert_Overwrite : !this.state.Alert_Overwrite})
     }
 
-    _edit=(_id)=>{
+    _edit(_id){
         for(var i = 0 ; i< this.state.ImageViewList.length ; i++){
             const object = this.state.ImageViewList[i];
             if(object._id == _id){
@@ -277,7 +281,7 @@ class MyCloset extends Component {
             }
         }
     }
-    _renderItem = ({ item }) => {
+    _renderItem({ item }){
         const _id = item._id
         const title = item.title;
         const tags = item.tags;
@@ -344,10 +348,10 @@ class MyCloset extends Component {
                                               justifyContent:'center', alignItems:'center'}}>
                                     <Text style={{color: '#fff', fontSize: 16}}>Are You Sure You Want To Overwrite This Outfit??</Text>
                                     <View style={{justifyContent:'space-around'}}>
-                                        <TouchableOpacity onPress={()=>this.askAreyouSure}>
+                                        <TouchableOpacity onPress={this.askAreyouSure}>
                                             <Text style={{color: '#fff', fontSize: 10}}>Cancel</Text>  
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={()=>this.acceptOverwrite(this.state._id)}>
+                                        <TouchableOpacity onPress={this.acceptOverwrite(this.state._id)}>
                                             <Text style={{color: '#fff', fontSize: 10}}>Accept</Text>  
                                         </TouchableOpacity>
                                     </View>
@@ -358,9 +362,9 @@ class MyCloset extends Component {
                                     <View style={{ flex: 3 }}></View>
                                     <View style={{ flex: 4, alignItems: 'center' }}>
                                         {this.state.Hats == null ?
-                                            <Image source={require('../../assets/for_search/hats.png')} style={styles_swiper.nohats} />
+                                            <FastImage source={require('../../assets/for_search/hats.png')} style={styles_swiper.nohats} />
                                             :
-                                            <Image source={{ uri: this.state.Hats }} style={styles_swiper.hats} />
+                                            <FastImage source={{ uri: this.state.Hats }} style={styles_swiper.hats} />
                                         }
                                     </View>
                                     <View style={{ flex: 5 }}></View>
@@ -371,26 +375,26 @@ class MyCloset extends Component {
                                         <View style={{ flex: 1 }}>
                                             {this.state.T_shirt == null ?
                                                 (this.state.Dress == null ?
-                                                    <Image source={require('../../assets/for_search/T.png')} style={styles_swiper.not_shirt} />
+                                                    <FastImage source={require('../../assets/for_search/T.png')} style={styles_swiper.not_shirt} />
                                                     : null)
                                                 :
-                                                <Image source={{ uri: this.state.T_shirt }} style={styles_swiper.t_shirt} onPress={this.state.T_shirt} />
+                                                <FastImage source={{ uri: this.state.T_shirt }} style={styles_swiper.t_shirt} onPress={this.state.T_shirt} />
                                             }
                                         </View>
                                         <View style={{ flex: 1 }}>
                                             {this.state.Trousers == null ?
                                                 ((this.state.Skirt == null && this.state.Dress == null) ?
-                                                    <Image source={require('../../assets/for_search/Trousers.png')} style={styles_swiper.notrousers} />
+                                                    <FastImage source={require('../../assets/for_search/Trousers.png')} style={styles_swiper.notrousers} />
                                                     : null)
                                                 :
-                                                <Image source={{ uri: this.state.Trousers }} style={styles_swiper.trousers} />
+                                                <FastImage source={{ uri: this.state.Trousers }} style={styles_swiper.trousers} />
                                             }
                                             {this.state.Skirt == null ?
                                                 ((this.state.Trousers == null && this.state.Dress == null) ?
-                                                    <Image source={require('../../assets/for_search/skirt.png')} style={styles_swiper.noskirt} />
+                                                    <FastImage source={require('../../assets/for_search/skirt.png')} style={styles_swiper.noskirt} />
                                                     : null)
                                                 :
-                                                <Image source={{ uri: this.state.Skirt }} style={styles_swiper.skirt} />
+                                                <FastImage source={{ uri: this.state.Skirt }} style={styles_swiper.skirt} />
                                             }
                                         </View>
                                     </View>
@@ -399,10 +403,10 @@ class MyCloset extends Component {
                                         <View style={{ flex: 4 }}>
                                             {this.state.Dress == null ?
                                                 ((this.state.T_shirt == null && this.state.Trousers == null && this.state.Skirt == null) ?
-                                                    <Image source={require('../../assets/for_search/dress.png')} style={styles_swiper.nodress} />
+                                                    <FastImage source={require('../../assets/for_search/dress.png')} style={styles_swiper.nodress} />
                                                     : null)
                                                 :
-                                                <Image source={{ uri: this.state.Dress }} style={styles_swiper.dress} />
+                                                <FastImage source={{ uri: this.state.Dress }} style={styles_swiper.dress} />
                                             }
                                         </View>
                                         <View style={{ flex: 2 }}></View>
@@ -410,17 +414,17 @@ class MyCloset extends Component {
                                     <View style={{ flex: 2 }}>
                                         <View style={{ flex: 1 }}>
                                             {this.state.Outer == null ?
-                                                <Image source={require('../../assets/for_search/outer.png')} style={styles_swiper.noouter} />
+                                                <FastImage source={require('../../assets/for_search/outer.png')} style={styles_swiper.noouter} />
                                                 :
-                                                <Image source={{ uri: this.state.Outer }} style={styles_swiper.outer} />
+                                                <FastImage source={{ uri: this.state.Outer }} style={styles_swiper.outer} />
                                             }
                                         </View>
                                         <View style={{ flex: 2 }}></View>
                                         <View style={{ flex: 1 }}>
                                             {this.state.Accessories == null ?
-                                                <Image source={require('../../assets/for_search/accessories.png')} style={styles_swiper.noaccessoriesTOP} />
+                                                <FastImage source={require('../../assets/for_search/accessories.png')} style={styles_swiper.noaccessoriesTOP} />
                                                 :
-                                                <Image source={{ uri: this.state.Accessories }} style={styles_swiper.accessoriesTOP} />
+                                                <FastImage source={{ uri: this.state.Accessories }} style={styles_swiper.accessoriesTOP} />
                                             }
                                         </View>
                                     </View>
@@ -430,9 +434,9 @@ class MyCloset extends Component {
                                     <View style={{ flex: 2 }}></View>
                                     <View style={{ flex: 4, alignItems: 'center', justifyContent: 'flex-end' }}>
                                         {this.state.Shoes == null ?
-                                            <Image source={require('../../assets/for_search/shoes.png')} style={styles_swiper.noshoes} />
+                                            <FastImage source={require('../../assets/for_search/shoes.png')} style={styles_swiper.noshoes} />
                                             :
-                                            <Image source={{ uri: this.state.Shoes }} style={styles_swiper.shoes} />
+                                            <FastImage source={{ uri: this.state.Shoes }} style={styles_swiper.shoes} />
 
                                         }
                                     </View>
@@ -448,20 +452,21 @@ class MyCloset extends Component {
                             }}>
                                 <TextInput
                                     underlineColorAndroid='transparent'
-                                    placeholder="Use #Hashtags to label your look!"
+                                    placeholder="Use #Hashtags to describe your look!"
                                     placeholderTextColor='grey'
                                     style={{ flex: 1, fontWeight: '700', padding: 10 }}
                                     onChangeText={(TextInputTag) => this.setState({ TextInputTag })}
                                     value={this.state.TextInputTag}
                                 />
                             </View>
-                            <View style={{flex:0.66}}></View>
+                            <View style={{flex:0.75}}></View>
                         </View>
                         <View
                             style={{ flex: 3, backgroundColor: '#A6A6A6' }} >
                             <FlatList
                                 data={this.state.ImageViewList}
-                                renderItem={this._renderItem} />
+                                renderItem={this._renderItem}/>
+                            <View style={{flex:1}}></View>
                         </View>
                     </View>
                     <View style={[IS_ANDROID ? styles_swiper.pageStyle_Android : styles_swiper.pageStyle, { paddingTop: 10 }]}>

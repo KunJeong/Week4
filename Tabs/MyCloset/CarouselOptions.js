@@ -16,6 +16,9 @@ let pageStyle = {};
 class CarouselOptions extends Component {
     constructor(props){
         super(props);
+        this._onPressADD = this._onPressADD.bind(this)
+        this._renderItem = this._renderItem.bind(this)
+        this.setAndPassSelectedItemUri = this.setAndPassSelectedItemUri.bind(this)
         this.state={
             isOpen: false,
             
@@ -45,14 +48,14 @@ class CarouselOptions extends Component {
         this.props._addItemToSet(uri, this.props.name)
     }
     _renderItem ({item, index}) {
-        return (<SliderEntry data={item} onClick={this.setAndPassSelectedItemUri.bind(this)}/>);
+        return (<SliderEntry data={item} onClick={this.setAndPassSelectedItemUri}/>);
     }
     renderCarousel(){
         if(this.state.isOpen){
             return( 
             <Carousel
                 data={this.props.Data}
-                renderItem={this._renderItem.bind(this)}
+                renderItem={this._renderItem}
                 sliderWidth={sliderWidth}
                 itemWidth={itemWidth}
                 containerCustomStyle={styles.slider}
@@ -91,7 +94,7 @@ class CarouselOptions extends Component {
                         alignItems:'center'
                         }}>
                     <View style={{flexDirection:'row'}} >
-                        <TouchableOpacity style={{flex:9}} onPress={this._onPressADD.bind(this)}>
+                        <TouchableOpacity style={{flex:9}} onPress={this._onPressADD}>
                             <Text style={[styles.title, styles.titleDark]}>{`${this.props.name}`}</Text>
                         </TouchableOpacity>
                         <Icon name="md-add" 
