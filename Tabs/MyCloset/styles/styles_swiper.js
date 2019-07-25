@@ -4,6 +4,7 @@ import { Container } from 'native-base';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 let offset = ((screenHeight - StatusBar.currentHeight) - screenWidth) / 2;
+
 export default StyleSheet.create({
     wrapper: {},
     slide_default: {
@@ -117,8 +118,8 @@ export default StyleSheet.create({
         position: 'absolute',
         // top: Math.round((53/66)*370),
         // left: Math.round((21/63)*350),
-        width: 65,
-        height: 65,
+        width: 70,
+        height: 70,
         borderRadius:8
     },
     noshoes:{

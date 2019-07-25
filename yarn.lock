@@ -6048,6 +6048,11 @@ react-native-vector-icons@^6.6.0:
     prop-types "^15.6.2"
     yargs "^13.2.2"
 
+react-native-view-shot@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.0.0.tgz#6bc4098287d23a3eec300c55c145d69489a1155b"
+  integrity sha512-Zz7zhVKTR7ENXFglFSopiXkLMseQBPHZ6jj2P0mTpCGsR3FyBdMwL6e3Js+cr7V8LHcgAhRVchplCs4qiTeBeg==
+
 react-native@0.60.3:
   version "0.60.3"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.60.3.tgz#da010bc5b63201166562ddeff1cd3e07da34d1de"

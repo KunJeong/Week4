@@ -43,6 +43,14 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: entryBorderRadius,
     },
+    imageContainer_Touched: {
+        flex: 1,
+        marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
+        backgroundColor: 'white',
+        borderRadius: entryBorderRadius,
+        borderWidth : 2,
+        borderColor : '#92DFF3'
+    },
     imageContainerEven: {
         backgroundColor: colors.black
     },

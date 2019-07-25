@@ -30,6 +30,8 @@ target 'Closet' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNViewShot', :path => '../node_modules/react-native-view-shot'
+
   target 'ClosetTests' do
     inherit! :search_paths
     # Pods for testing

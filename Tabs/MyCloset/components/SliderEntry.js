@@ -7,6 +7,9 @@ import styles from '../styles/SliderEntry.style';
 export default class SliderEntry extends Component<Props> {
     constructor(props){
         super(props);
+        this.state = {
+            touched : false
+        }
     }
 
     static propTypes = {
@@ -23,7 +26,11 @@ export default class SliderEntry extends Component<Props> {
             />
         );
     }
-
+    touched=()=>{
+        const { data: { illustration }} = this.props;
+        this.props.onClick(illustration)
+        this.setState({touched : !this.state.touched})
+    }
     render () {
         const { data: { subtitle } } = this.props;
         const { data: { illustration }} = this.props;
@@ -31,13 +38,17 @@ export default class SliderEntry extends Component<Props> {
             <TouchableOpacity
               activeOpacity={1}
               style={styles.slideInnerContainer}
-              onPress = {()=>this.props.onClick(illustration)}
+        onPress = {this.touched/*[()=>this.props.onClick(illustration)]*/}
               >
                 <View style={styles.shadow} />
-                <View style={styles.imageContainer}>
+                {this.state.touched ? (<View style={styles.imageContainer_Touched}>
                     { this.image }
                     <View style={styles.radiusMask} />
-                </View>
+                </View>) : 
+                (<View style={styles.imageContainer}>
+                    { this.image }
+                    <View style={styles.radiusMask} />
+                </View>)}
                 <View style={styles.textContainer}>
                     <Text
                       style={styles.subtitle}
