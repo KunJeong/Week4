@@ -14,7 +14,7 @@
     "@react-native-community/cli": "^2.7.0",
     "@react-navigation/core": "^3.4.2",
     "react": "16.8.6",
-    "react-native": "0.60.3",
+    "react-native": "0.62.3",
     "react-native-masonry-list": "^2.13.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-sliding-up-down-panel": "^1.0.0",
